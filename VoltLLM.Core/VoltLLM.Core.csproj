@@ -8,4 +8,8 @@
     <Description>Core LLM client library for VoltLLM tools.</Description>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+  </ItemGroup>
+
 </Project>
