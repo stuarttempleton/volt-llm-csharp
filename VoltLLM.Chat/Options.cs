@@ -1,5 +1,7 @@
 using System;
 
+namespace VoltLLM.Chat;
+
 public class Options
 {
     public string Model { get; set; } = "Gemma3:1b";

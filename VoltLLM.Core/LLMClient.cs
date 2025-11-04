@@ -5,6 +5,7 @@ using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
+using VoltLLM.Core;
 
 namespace VoltLLM.Core;
 
@@ -73,12 +74,12 @@ public class LLMClient
                     };
                     if (string.IsNullOrEmpty(bearerToken))
                     {
-                        Console.WriteLine("[WARN] Missing API token. Please set LLM_API_TOKEN as a user environment variable.");
-                        Console.WriteLine("\nNeed a hand?");
-                        Console.WriteLine("PowerShell (permanent):");
-                        Console.WriteLine("  [System.Environment]::SetEnvironmentVariable(\"LLM_API_TOKEN\", \"your-secret-token-here\", \"User\")");
-                        Console.WriteLine("PowerShell (temporary):");
-                        Console.WriteLine("  $env:LLM_API_TOKEN = \"your-secret-token-here\"");
+                        Logger.LogWarning("Missing API token. Please set LLM_API_TOKEN as a user environment variable.");
+                        Logger.LogInformation("\nNeed a hand?");
+                        Logger.LogInformation("PowerShell (permanent):");
+                        Logger.LogInformation("  [System.Environment]::SetEnvironmentVariable(\"LLM_API_TOKEN\", \"your-secret-token-here\", \"User\")");
+                        Logger.LogInformation("PowerShell (temporary):");
+                        Logger.LogInformation("  $env:LLM_API_TOKEN = \"your-secret-token-here\"");
                     }
                     return;
                 }
@@ -132,7 +133,7 @@ public class LLMClient
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine($"[ERROR] Request failed: {ex.Message}");
+                Logger.LogError($"Request failed: {ex.Message}");
                 return null;
             }
         }
@@ -202,7 +203,7 @@ public class LLMClient
         }
         catch (Exception ex)
         {
-            Console.Error.WriteLine($"[ERROR] Request failed: {ex.Message}");
+            Logger.LogError($"Request failed: {ex.Message}");
             return null;
         }
     }
@@ -219,7 +220,7 @@ public class LLMClient
             return result["message"]?["content"]?.ToString();
         }
 
-        Console.Error.WriteLine("[WARN] Unexpected JSON structure.");
+    Logger.LogWarning("Unexpected JSON structure.");
         return null;
     }
 }

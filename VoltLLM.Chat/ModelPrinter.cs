@@ -1,5 +1,8 @@
 using Newtonsoft.Json.Linq;
 using System;
+using VoltLLM.Core;
+
+namespace VoltLLM.Chat;
 
 public static class ModelManager
 {
@@ -7,7 +10,7 @@ public static class ModelManager
     {
         if (m == null)
         {
-            Console.WriteLine("Feature not available.");
+            Logger.LogWarning("Feature not available.");
             return;
         }
 
@@ -39,17 +42,17 @@ public static class ModelManager
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error parsing models: {ex.Message}");
+            Logger.LogError($"Error parsing models: {ex.Message}");
         }
 
         if (found)
         {
-            Console.WriteLine("Available Models:");
-            Console.WriteLine(modelList.ToString());
+            Logger.Log("Available Models:");
+            Logger.Log(modelList.ToString());
         }
         else
         {
-            Console.WriteLine("Feature not available.");
+            Logger.LogWarning("Feature not available.");
         }
     }
 }
