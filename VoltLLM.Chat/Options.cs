@@ -7,7 +7,7 @@ public class Options
     public string Model { get; set; } = "Gemma3:1b";
     public string Handle { get; set; } = "You";
     public string BaseUrl { get; set; } = "http://localhost:11434/";
-    public string? Token { get; set; } = null;
+    public string Token { get; set; } = "";
 
     public static Options Parse(string[] args)
     {
@@ -27,7 +27,7 @@ public class Options
                 options.BaseUrl = arg.Substring("--base-url=".Length);
             }
         }
-        options.Token = Environment.GetEnvironmentVariable("LLM_API_TOKEN");
+        options.Token = Environment.GetEnvironmentVariable("LLM_API_TOKEN") ?? "";
         return options;
     }
 }
