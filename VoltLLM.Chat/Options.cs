@@ -5,9 +5,10 @@ namespace VoltLLM.Chat;
 public class Options
 {
     public string Model { get; set; } = "Gemma3:1b";
-    public string Handle { get; set; } = "You";
+    public string Handle { get; set; } = Environment.UserName ?? "You";
     public string BaseUrl { get; set; } = "http://localhost:11434/";
     public string Token { get; set; } = "";
+    public bool NoColor { get; set; } = false;
 
     public static Options Parse(string[] args)
     {
@@ -25,6 +26,10 @@ public class Options
             else if (arg.StartsWith("--base-url="))
             {
                 options.BaseUrl = arg.Substring("--base-url=".Length);
+            }
+            else if (arg.StartsWith("--no-color"))
+            {
+                options.NoColor = true;
             }
         }
         options.Token = Environment.GetEnvironmentVariable("LLM_API_TOKEN") ?? "";

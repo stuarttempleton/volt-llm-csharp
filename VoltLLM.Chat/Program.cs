@@ -15,25 +15,19 @@ internal class Program
 
         var options = Options.Parse(args);
         string[] exit_commands = ["/exit", "/bye", "/quit"];
-        bool noColor = false;
-        foreach (var arg in args)
-        {
-            if (arg.StartsWith("--no-color"))
-            {
-                noColor = true;
-            }
-        }
+    
         var convo = new LLMConversation(model: options.Model, token: options.Token, baseUrl: options.BaseUrl);
+        Logger.SetUseColor(!options.NoColor);
         Logger.LogInformation($"Interactive chat with model: {options.Model} @ {options.BaseUrl} ({convo.client.ApiType})");
         Logger.LogInformation("Type 'exit' or press Ctrl+C to quit.\n");
 
         while (true)
         {
             Console.Write("🧠 ");
-            if (!noColor)
+            if (!options.NoColor)
                 Console.ForegroundColor = ConsoleColor.Green;
             Console.Write(options.Handle);
-            if (!noColor)
+            if (!options.NoColor)
                 Console.ResetColor();
             Console.Write(" > ");
             var input = Console.ReadLine();
@@ -57,10 +51,10 @@ internal class Program
                 if (!string.IsNullOrWhiteSpace(reply))
                 {
                     Console.Write("🤖 ");
-                    if (!noColor)
+                    if (!options.NoColor)
                         Console.ForegroundColor = ConsoleColor.Cyan;
                     Console.Write(options.Model);
-                    if (!noColor)
+                    if (!options.NoColor)
                         Console.ResetColor();
                     Logger.Log($" > {reply}\n");
                 }
